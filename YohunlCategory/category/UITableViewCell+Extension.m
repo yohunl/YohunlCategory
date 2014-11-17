@@ -20,4 +20,9 @@
 - (NSIndexPath *)indexPath {
     return [self.tableView indexPathForCell:self];
 }
+
++ (NSString *)reuseableIdentifier
+{
+    return NSStringFromClass([self class]);
+}
 @end

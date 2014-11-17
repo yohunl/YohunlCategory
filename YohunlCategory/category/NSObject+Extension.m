@@ -7,7 +7,7 @@
 //
 
 #import "NSObject+Extension.h"
-
+#import <objc/message.h>
 @implementation NSObject (Extension)
 
 @end

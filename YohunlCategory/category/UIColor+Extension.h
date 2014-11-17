@@ -9,7 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @interface UIColor (Extension)
-
+/**
+ Creates a random color.
+ */
++ (UIColor *)randomColor;
 @end
 
 

@@ -22,6 +22,11 @@
  */
 @property(nonatomic,readonly) NSIndexPath *indexPath;
 
-
+/**
+ *  生成默认的reuser 标识符
+ *
+ *  @return 标识符
+ */
++ (NSString *)reuseableIdentifier;
 
 @end

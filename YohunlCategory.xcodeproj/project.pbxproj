@@ -20,6 +20,7 @@
 		0949BB931A15F1BD00DF7342 /* UIColor+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 0949BB921A15F1BD00DF7342 /* UIColor+Extension.m */; };
 		0949BB961A15F31800DF7342 /* NSObject+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 0949BB951A15F31800DF7342 /* NSObject+Extension.m */; };
 		0949BB9A1A15F46B00DF7342 /* NSObject+KVOBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 0949BB991A15F46B00DF7342 /* NSObject+KVOBlock.m */; };
+		09D4EB421A19F75200E4C3C5 /* UIView+Helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 09D4EB411A19F75200E4C3C5 /* UIView+Helpers.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,8 @@
 		0949BB981A15F46B00DF7342 /* NSObject+KVOBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+KVOBlock.h"; sourceTree = "<group>"; };
 		0949BB991A15F46B00DF7342 /* NSObject+KVOBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+KVOBlock.m"; sourceTree = "<group>"; };
 		0949BB9B1A15F4B400DF7342 /* 说明.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = "说明.rtf"; sourceTree = "<group>"; };
+		09D4EB411A19F75200E4C3C5 /* UIView+Helpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Helpers.m"; sourceTree = "<group>"; };
+		09D4EB431A19F75C00E4C3C5 /* UIView+Helpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+Helpers.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,13 +146,12 @@
 		0949BB871A15EA2600DF7342 /* category */ = {
 			isa = PBXGroup;
 			children = (
+				09D4EB401A19F74100E4C3C5 /* UIView */,
 				0949BB971A15F44600DF7342 /* NSObject */,
 				0949BB881A15EADB00DF7342 /* UITableViewCell+Extension.h */,
 				0949BB891A15EADB00DF7342 /* UITableViewCell+Extension.m */,
 				0949BB8B1A15EBD900DF7342 /* UITableView+Extension.h */,
 				0949BB8C1A15EBD900DF7342 /* UITableView+Extension.m */,
-				0949BB8E1A15EBF400DF7342 /* UIView+Extension.h */,
-				0949BB8F1A15EBF400DF7342 /* UIView+Extension.m */,
 				0949BB911A15F1BD00DF7342 /* UIColor+Extension.h */,
 				0949BB921A15F1BD00DF7342 /* UIColor+Extension.m */,
 				0949BB941A15F31800DF7342 /* NSObject+Extension.h */,
@@ -165,6 +167,17 @@
 				0949BB991A15F46B00DF7342 /* NSObject+KVOBlock.m */,
 			);
 			name = NSObject;
+			sourceTree = "<group>";
+		};
+		09D4EB401A19F74100E4C3C5 /* UIView */ = {
+			isa = PBXGroup;
+			children = (
+				09D4EB431A19F75C00E4C3C5 /* UIView+Helpers.h */,
+				09D4EB411A19F75200E4C3C5 /* UIView+Helpers.m */,
+				0949BB8E1A15EBF400DF7342 /* UIView+Extension.h */,
+				0949BB8F1A15EBF400DF7342 /* UIView+Extension.m */,
+			);
+			name = UIView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -275,6 +288,7 @@
 				0949BB641A15E9E700DF7342 /* main.m in Sources */,
 				0949BB8A1A15EADB00DF7342 /* UITableViewCell+Extension.m in Sources */,
 				0949BB961A15F31800DF7342 /* NSObject+Extension.m in Sources */,
+				09D4EB421A19F75200E4C3C5 /* UIView+Helpers.m in Sources */,
 				0949BB9A1A15F46B00DF7342 /* NSObject+KVOBlock.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -468,6 +482,7 @@
 				0949BB831A15E9E700DF7342 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0949BB841A15E9E700DF7342 /* Build configuration list for PBXNativeTarget "YohunlCategoryTests" */ = {
 			isa = XCConfigurationList;
@@ -476,6 +491,7 @@
 				0949BB861A15E9E700DF7342 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
