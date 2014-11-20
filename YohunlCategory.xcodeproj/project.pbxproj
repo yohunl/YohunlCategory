@@ -20,6 +20,8 @@
 		0949BB931A15F1BD00DF7342 /* UIColor+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 0949BB921A15F1BD00DF7342 /* UIColor+Extension.m */; };
 		0949BB961A15F31800DF7342 /* NSObject+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 0949BB951A15F31800DF7342 /* NSObject+Extension.m */; };
 		0949BB9A1A15F46B00DF7342 /* NSObject+KVOBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 0949BB991A15F46B00DF7342 /* NSObject+KVOBlock.m */; };
+		097221191A1DD5D900C0A125 /* NSString+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 097221181A1DD5D900C0A125 /* NSString+Extension.m */; };
+		0995F8871A1C82B700980A6C /* gujia_press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0995F8861A1C82B700980A6C /* gujia_press@2x.png */; };
 		09D4EB421A19F75200E4C3C5 /* UIView+Helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 09D4EB411A19F75200E4C3C5 /* UIView+Helpers.m */; };
 /* End PBXBuildFile section */
 
@@ -60,6 +62,9 @@
 		0949BB981A15F46B00DF7342 /* NSObject+KVOBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+KVOBlock.h"; sourceTree = "<group>"; };
 		0949BB991A15F46B00DF7342 /* NSObject+KVOBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+KVOBlock.m"; sourceTree = "<group>"; };
 		0949BB9B1A15F4B400DF7342 /* 说明.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = "说明.rtf"; sourceTree = "<group>"; };
+		097221171A1DD5D900C0A125 /* NSString+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Extension.h"; sourceTree = "<group>"; };
+		097221181A1DD5D900C0A125 /* NSString+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Extension.m"; sourceTree = "<group>"; };
+		0995F8861A1C82B700980A6C /* gujia_press@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gujia_press@2x.png"; sourceTree = "<group>"; };
 		09D4EB411A19F75200E4C3C5 /* UIView+Helpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Helpers.m"; sourceTree = "<group>"; };
 		09D4EB431A19F75C00E4C3C5 /* UIView+Helpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+Helpers.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -103,6 +108,7 @@
 		0949BB601A15E9E700DF7342 /* YohunlCategory */ = {
 			isa = PBXGroup;
 			children = (
+				0995F8861A1C82B700980A6C /* gujia_press@2x.png */,
 				0949BB9B1A15F4B400DF7342 /* 说明.rtf */,
 				0949BB871A15EA2600DF7342 /* category */,
 				0949BB651A15E9E700DF7342 /* AppDelegate.h */,
@@ -156,6 +162,8 @@
 				0949BB921A15F1BD00DF7342 /* UIColor+Extension.m */,
 				0949BB941A15F31800DF7342 /* NSObject+Extension.h */,
 				0949BB951A15F31800DF7342 /* NSObject+Extension.m */,
+				097221171A1DD5D900C0A125 /* NSString+Extension.h */,
+				097221181A1DD5D900C0A125 /* NSString+Extension.m */,
 			);
 			path = category;
 			sourceTree = "<group>";
@@ -263,6 +271,7 @@
 				0949BB6D1A15E9E700DF7342 /* Main.storyboard in Resources */,
 				0949BB721A15E9E700DF7342 /* LaunchScreen.xib in Resources */,
 				0949BB6F1A15E9E700DF7342 /* Images.xcassets in Resources */,
+				0995F8871A1C82B700980A6C /* gujia_press@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -285,6 +294,7 @@
 				0949BB6A1A15E9E700DF7342 /* ViewController.m in Sources */,
 				0949BB931A15F1BD00DF7342 /* UIColor+Extension.m in Sources */,
 				0949BB671A15E9E700DF7342 /* AppDelegate.m in Sources */,
+				097221191A1DD5D900C0A125 /* NSString+Extension.m in Sources */,
 				0949BB641A15E9E700DF7342 /* main.m in Sources */,
 				0949BB8A1A15EADB00DF7342 /* UITableViewCell+Extension.m in Sources */,
 				0949BB961A15F31800DF7342 /* NSObject+Extension.m in Sources */,
