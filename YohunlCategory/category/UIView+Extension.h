@@ -22,6 +22,43 @@
  *  @return 第一响应对象
  */
 - (UIView *)ldp_findFirstResponder;
+
+
+/**
+ *  在自己的子视图中寻找类型为 cls的视图
+ *
+ *  @param cls 要找寻的视图类型
+ *
+ *  @return 找到的视图,如果没找到,返回nil
+ */
+- (UIView *)descendantOrSelfWithClass:(Class)cls;
+
+/**
+ *  在自己的父类中寻找类型为cls的视图
+ *
+ *  @param cls 要找寻的视图类型
+ *
+ *  @return 找到的视图,如果没找到,返回nil
+ */
+- (UIView *)ancestorOrSelfWithClass:(Class)cls;
+
+/**
+ *  移除所有的子类视图
+ */
+- (void)removeAllSubviews;
+
+
+/**
+ *  Rounded corners using performant Bezier Path
+ *
+ *  @param inRadius radius of the corners
+ */
+- (void)addBezierPathRoundedCornersWithRadius:(CGFloat)inRadius;
+
+- (void)setRoundedCorners:(UIRectCorner)corners radius:(CGFloat)radius;
+- (void)setRoundedCornersWithRadius:(CGFloat)radius;
+
+
 @end
 
 

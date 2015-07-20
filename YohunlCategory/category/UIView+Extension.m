@@ -38,6 +38,78 @@ const NSTimeInterval UIAViewAnimationDefaultDuraton = 0.2;
     return nil;
 }
 
+
+#pragma mark - Shortcuts for subviews
+
+- (UIView *)descendantOrSelfWithClass:(Class)cls {
+    if ([self isKindOfClass:cls])
+        return self;
+    
+    for (UIView * child in self.subviews) {
+        UIView *it = [child descendantOrSelfWithClass:cls];
+        if (it != nil) {
+            return it;
+        }
+    }
+    
+    return nil;
+}
+
+- (UIView*)ancestorOrSelfWithClass:(Class)cls {
+    if ([self isKindOfClass:cls]) {
+        return self;
+        
+    } else if (self.superview) {
+        return [self.superview ancestorOrSelfWithClass:cls];
+        
+    } else {
+        return nil;
+    }
+}
+
+- (void)removeAllSubviews {
+    [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+}
+
+
+#pragma mark - Rounded corners
+
+- (void)addBezierPathRoundedCornersWithRadius:(CGFloat)inRadius {
+    CAShapeLayer * shapeLayer = [CAShapeLayer layer];
+    //Setting the background color of the masking shape layer to clear color is key
+    //otherwise it would mask everything
+    shapeLayer.backgroundColor = [UIColor clearColor].CGColor;
+    shapeLayer.path = [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:inRadius].CGPath;
+    
+    
+    
+    self.layer.masksToBounds = YES;
+    self.layer.mask = shapeLayer;
+    shapeLayer.frame = self.layer.bounds;
+}
+
+- (void)setRoundedCorners:(UIRectCorner)corners radius:(CGFloat)radius {
+    CGRect rect = self.bounds;
+    
+    // Create the path
+    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:rect
+                                                   byRoundingCorners:corners
+                                                         cornerRadii:CGSizeMake(radius, radius)];
+    
+    // Create the shape layer and set its path
+    CAShapeLayer *maskLayer = [CAShapeLayer layer];
+    maskLayer.frame = rect;
+    maskLayer.path = maskPath.CGPath;
+    
+    // Set the newly created shape layer as the mask for the view's layer
+    self.layer.mask = maskLayer;
+}
+
+- (void)setRoundedCornersWithRadius:(CGFloat)radius {
+    [self addBezierPathRoundedCornersWithRadius:radius];
+}
+
+
 @end
 
 
