@@ -74,7 +74,7 @@
     UIImage *img33 = [UIImage imageNamed:@"400dianhua"];
     //img = [img maskWithImage:img33];
     //img = [img transparentBorderImage:5];
-    img = [img roundedCornerImage:14 borderSize:1];
+    img = [img circularWithDiamter:50];
     UIImageView *imgview = [[UIImageView alloc]initWithImage:img];
     imgview.center = CGPointMake(150, 150);
     imgview.backgroundColor = [UIColor blackColor];

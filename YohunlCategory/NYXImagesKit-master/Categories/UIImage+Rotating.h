@@ -35,4 +35,13 @@
  */
 -(UIImage*)horizontalFlip;
 
+/**
+ *  生成图片的水平翻转图片
+ *
+ *  @param image 原图片
+ *
+ *  @return 水平翻转图片
+ */
++ (UIImage *)horizontallyFlippedImageFromImage:(UIImage *)image;
+
 @end

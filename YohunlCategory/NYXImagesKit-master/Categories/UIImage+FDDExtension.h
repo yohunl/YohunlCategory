@@ -15,4 +15,15 @@
  *  @return 返回截屏的图片
  */
 + (UIImage *)screenshot;
+
+/**
+ *  生成一张圆形的图片
+ *
+ *  @param diameter 圆形的直径
+ *
+ *  @return 圆形的图片
+ */
+- (UIImage *)circularWithDiamter:(NSUInteger)diameter;
+
+
 @end

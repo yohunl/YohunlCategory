@@ -42,4 +42,27 @@
     return image;
 }
 
+
+- (UIImage *)circularWithDiamter:(NSUInteger)diameter
+{
+    
+    CGRect frame = CGRectMake(0.0f, 0.0f, diameter, diameter);
+    
+    UIGraphicsBeginImageContextWithOptions(frame.size, NO, [UIScreen mainScreen].scale);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSaveGState(context);
+    
+    UIBezierPath *imgPath = [UIBezierPath bezierPathWithOvalInRect:frame];
+    [imgPath addClip];
+    [self drawInRect:frame];
+    
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    
+    CGContextRestoreGState(context);
+    UIGraphicsEndImageContext();
+    return newImage;
+}
+
+
+
 @end

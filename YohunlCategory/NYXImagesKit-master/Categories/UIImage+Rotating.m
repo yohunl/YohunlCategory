@@ -161,4 +161,13 @@
 	return flipped;
 }
 
+
++ (UIImage *)horizontallyFlippedImageFromImage:(UIImage *)image
+{
+    return [UIImage imageWithCGImage:image.CGImage
+                               scale:image.scale
+                         orientation:UIImageOrientationUpMirrored];
+}
+
+
 @end
