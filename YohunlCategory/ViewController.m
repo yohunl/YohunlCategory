@@ -8,6 +8,9 @@
 
 #import "ViewController.h"
 #import "NYXImagesKit.h"
+#import "UIImage+Alpha.h"
+#import "UIImage+RoundedCorner.h"
+
 @interface ViewController ()
 
 @end
@@ -17,7 +20,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
+    NSLog(@"self.view.frame = %@",NSStringFromCGRect(self.view.frame) );
    UIButton * button1 = [UIButton buttonWithType:UIButtonTypeCustom];
     button1.translatesAutoresizingMaskIntoConstraints = NO;
     //[button1 setTitle:@"button 1 button 2 button 3 button 4" forState:UIControlStateNormal];
@@ -63,15 +66,18 @@
     
     [view setNeedsDisplay];
     
-    UIImage *img = [UIImage imageNamed:@"hongyanYY"];
+    UIImage *img = [UIImage imageNamed:@"hongyan.jpg"];
     //img = [img scaleToFitSize:CGSizeMake(70, 70)];
-    //img = [img reflectedImageWithHeight:200 fromAlpha:2 toAlpha:100];
+    //img = [img imageTintedWithColor:[UIColor redColor] fraction:0.6];
     
-    UIImage *img33 = [UIImage imageWithColor:[UIColor greenColor] size:img.size];
-    img = [img maskWithImage:img33];
-    
+    //UIImage *img33 = [UIImage imageWithColor:[UIColor greenColor] size:CGSizeMake(20, 20)];
+    UIImage *img33 = [UIImage imageNamed:@"400dianhua"];
+    //img = [img maskWithImage:img33];
+    //img = [img transparentBorderImage:5];
+    img = [img roundedCornerImage:14 borderSize:1];
     UIImageView *imgview = [[UIImageView alloc]initWithImage:img];
     imgview.center = CGPointMake(150, 150);
+    imgview.backgroundColor = [UIColor blackColor];
     [self.view addSubview:imgview];
     
     

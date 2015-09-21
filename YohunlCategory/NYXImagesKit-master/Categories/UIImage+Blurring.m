@@ -65,6 +65,11 @@ static int16_t __s_gaussianblur_kernel_5x5[25] = {
 	}
 	else
 	{
+     //去除提示这段代码不可能被执行的警告
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunreachable-code"
+       
+
 		const size_t pixelsCount = width * height;
 		const size_t n = sizeof(float) * pixelsCount;
 		float* dataAsFloat = malloc(n);
@@ -87,6 +92,7 @@ static int16_t __s_gaussianblur_kernel_5x5[25] = {
 
 		free(resultAsFloat);
 		free(dataAsFloat);
+#pragma clang diagnostic pop//[-Wunreachable-code]
 	}
 
 	CGImageRef blurredImageRef = CGBitmapContextCreateImage(bmContext);

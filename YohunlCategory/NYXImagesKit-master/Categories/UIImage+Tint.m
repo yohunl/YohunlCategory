@@ -1,14 +1,14 @@
 //
 //  UIImage+Tint.m
 //
-//  Created by Matt Gemmell on 04/07/2010.
-//  Copyright 2010 Instinctive Code.
+//  Created by yohunl
+
 //
 
 #import "UIImage+Tint.h"
 
 
-@implementation UIImage (MGTint)
+@implementation UIImage (FDDTint)
 
 
 - (UIImage *)imageTintedWithColor:(UIColor *)color
@@ -20,6 +20,7 @@
 
 - (UIImage *)imageTintedWithColor:(UIColor *)color fraction:(CGFloat)fraction
 {
+    //kCGBlendModeDestinationIn 等参数的表示什么? R表示结果，S表示包含alpha的原色，D表示包含alpha的目标色，Ra，Sa和Da分别是三个的alpha
 	if (color) {
 		// Construct new image the same size as this one.
 		UIImage *image;
@@ -58,8 +59,34 @@
 	return self;
 }
 
+
+
+
+
+
+- (UIImage *)imageWithBlendMode:(CGBlendMode)blendMode tintColor:(UIColor *)tintColor {
+    UIImage *img;
+    UIGraphicsBeginImageContextWithOptions(self.size, NO, 0); //开始图片上下文绘制
+    
+    [tintColor setFill]; //填充颜色
+    CGRect newRect = CGRectMake(0, 0, self.size.width, self.size.height);
+    UIRectFill(newRect);
+    [self drawInRect:newRect blendMode:blendMode alpha:1.0]; //设置绘画透明混合模式和透明度
+    if (blendMode == kCGBlendModeOverlay) {
+        [self drawInRect:newRect blendMode:kCGBlendModeDestinationIn alpha:1.0]; //能保留透明度信息
+    }
+    
+    img = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext(); //结束图片上下文绘制
+    return img;
+}
+
+
+
+
 + (UIImage *)imageWithColor:(UIColor *)color size:(CGSize)size {
-    UIGraphicsBeginImageContextWithOptions(size, NO, .0);
+    UIGraphicsBeginImageContextWithOptions(size, NO, .0);//最后一个参数取0,则使用的是[[UIScreen mainScreen]scale]
     CGContextRef context = UIGraphicsGetCurrentContext();
     
     [color set];
@@ -71,54 +98,16 @@
 }
 
 
-+ (UIImage *)imageOfSize:(CGSize)size color:(UIColor *)color{
-    return [self imageWithColor:color size:size];
-}
 
 + (UIImage *)imageWithColor:(UIColor *)color {
-    return [self imageOfSize:CGSizeMake(1.0, 1.0) color:color];
+    return [self imageWithColor:color size:CGSizeMake(1.0, 1.0)];
 }
 
 
 
 + (UIImage *)circularImageWithColor:(UIColor *)color withDiamter:(NSUInteger)diameter
 {
-    NSParameterAssert(color != nil);
-    NSParameterAssert(diameter > 0);
-    CGRect frame = CGRectMake(0.0f, 0.0f, diameter, diameter);
-    CGFloat scale = 2;
-    //由于我们使用的是 没有匹配Ip6和6+.很奇怪[[UIScreen mainScreen] scale]竟然是2,但是lldb打印又是3  并且,在这种模式下 iPhone6plus这个宏返回的竟然是 640*1136,并不能判断ip6+,所以只能采取另外的方式来判断了
-    UIScreen *screen = [UIScreen mainScreen];
-    if ([screen  respondsToSelector:@selector(nativeBounds)]  ) {
-        CGRect rect = [screen nativeBounds];
-        if (rect.size.height > 1480) {//6+  scale 应该是3
-            scale = 3;
-        }
-        else {
-            scale = [[UIScreen mainScreen] scale];
-        }
-    }
-    else {
-      scale = [[UIScreen mainScreen] scale];
-    }
-  
-
-    UIGraphicsBeginImageContextWithOptions(frame.size, NO, scale);
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSaveGState(context);
-    
-    
-    UIBezierPath *imgPath = [UIBezierPath bezierPathWithOvalInRect:frame];
-    [imgPath addClip];
-    CGContextSetFillColorWithColor(context, color.CGColor);
-    CGContextFillEllipseInRect(context, frame);
-
-
-    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-    
-    CGContextRestoreGState(context);
-    UIGraphicsEndImageContext();
-    return newImage;
+    return [self circularImageWithColor:color withDiamter:diameter scale:0.0];
 }
 
 + (UIImage *)circularImageWithColor:(UIColor *)color withDiamter:(NSUInteger)diameter  scale:(CGFloat)scale {
@@ -128,160 +117,24 @@
     
     UIGraphicsBeginImageContextWithOptions(frame.size, NO, scale);
     CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSaveGState(context);
-    
     
     UIBezierPath *imgPath = [UIBezierPath bezierPathWithOvalInRect:frame];
     [imgPath addClip];
     
-    
-    CGContextSetFillColorWithColor(context, [UIColor whiteColor].CGColor);
+    CGContextSetFillColorWithColor(context, color.CGColor);
     CGContextFillEllipseInRect(context, frame);
     
-    
-    CGContextSetFillColorWithColor(context, color.CGColor);
-    CGRect frame2 = CGRectInset(frame, 1, 1);
-    CGContextFillEllipseInRect(context, frame2);
-    
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
     
-    CGContextRestoreGState(context);
     UIGraphicsEndImageContext();
     return newImage;
 }
 
 
 
-+ (UIImage *)circularImageWithColor:(UIColor *)color waiColor:(UIColor *)waiColor withDiamter:(NSUInteger)diameter
-{
-    NSParameterAssert(color != nil);
-    NSParameterAssert(diameter > 0);
-    CGRect frame = CGRectMake(0.0f, 0.0f, diameter, diameter);
-    CGFloat scale = 2;
-    //由于我们使用的是 没有匹配Ip6和6+.很奇怪[[UIScreen mainScreen] scale]竟然是2,但是lldb打印又是3  并且,在这种模式下 iPhone6plus这个宏返回的竟然是 640*1136,并不能判断ip6+,所以只能采取另外的方式来判断了
-    UIScreen *screen = [UIScreen mainScreen];
-    if ([screen  respondsToSelector:@selector(nativeBounds)]  ) {
-        CGRect rect = [screen nativeBounds];
-        if (rect.size.height > 1480) {//6+  scale 应该是3
-            scale = 3;
-        }
-        else {
-            scale = [[UIScreen mainScreen] scale];
-        }
-    }
-    else {
-        scale = [[UIScreen mainScreen] scale];
-    }
-    
-    
-    UIGraphicsBeginImageContextWithOptions(frame.size, NO, scale);
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSaveGState(context);
-    
-    
-    UIBezierPath *imgPath = [UIBezierPath bezierPathWithOvalInRect:frame];
-    [imgPath addClip];
-    
-    if (waiColor) {
-        
-        CGContextSaveGState(context);
-        
-        CGFloat lineWidth = 4;
-        
-        CGContextSetLineWidth(context, lineWidth);
-        
-        UIBezierPath *outlinePath = [UIBezierPath bezierPathWithOvalInRect:frame];
-        CGContextSetStrokeColorWithColor(context, waiColor.CGColor);
-        CGContextAddPath(context, outlinePath.CGPath);
-        CGContextStrokePath(context);
-        CGContextRestoreGState(context);
-        
-        CGRect frame3 = CGRectInset(frame,3, 3);
-        //CGContextClearRect(context, frame3);
-        CGContextSetFillColorWithColor(context, color.CGColor);
-        CGContextFillEllipseInRect(context, frame3);
-        //CGContextFillPath(context);
-    }
-    else {
-        CGContextSetFillColorWithColor(context, color.CGColor);
-        CGRect frame2 = CGRectInset(frame, 2, 2);
-        CGContextFillEllipseInRect(context, frame2);
-    }
-    
- 
-    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-    
-    CGContextRestoreGState(context);
-    UIGraphicsEndImageContext();
-    return newImage;
-}
 
 
-- (UIImage *)pbResizedImageWithWidth:(CGFloat)newWidth andTiledAreaFrom:(CGFloat)from1 to:(CGFloat)to1 andFrom:(CGFloat)from2 to:(CGFloat)to2  {
-    NSAssert(self.size.width < newWidth, @"Cannot scale NewWidth %f > self.size.width %f", newWidth, self.size.width);
-    
-    CGFloat originalWidth = self.size.width;
-    CGFloat tiledAreaWidth = (newWidth - originalWidth)/2;
-    
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(originalWidth + tiledAreaWidth, self.size.height), NO, self.scale);
-    
-    UIImage *firstResizable = [self resizableImageWithCapInsets:UIEdgeInsetsMake(0, from1, 0, originalWidth - to1) resizingMode:UIImageResizingModeTile];
-    [firstResizable drawInRect:CGRectMake(0, 0, originalWidth + tiledAreaWidth, self.size.height)];
-    
-    UIImage *leftPart = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(newWidth, self.size.height), NO, self.scale);
-    
-    UIImage *secondResizable = [leftPart resizableImageWithCapInsets:UIEdgeInsetsMake(0, from2 + tiledAreaWidth, 0, originalWidth - to2) resizingMode:UIImageResizingModeTile];
-    [secondResizable drawInRect:CGRectMake(0, 0, newWidth, self.size.height)];
-    
-    UIImage *fullImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    return fullImage;
-}
-
-
-+ (UIImage *)fdd_imageWithColor:(UIColor *)color size:(CGSize)size
-{
-
-    CGRect frame = CGRectMake(0.0f, 0.0f, size.width, size.height);
-    CGFloat scale = 2;
-    //由于我们使用的是 没有匹配Ip6和6+.很奇怪[[UIScreen mainScreen] scale]竟然是2,但是lldb打印又是3  并且,在这种模式下 iPhone6plus这个宏返回的竟然是 640*1136,并不能判断ip6+,所以只能采取另外的方式来判断了
-    UIScreen *screen = [UIScreen mainScreen];
-    if ([screen  respondsToSelector:@selector(nativeBounds)]  ) {
-        CGRect rect = [screen nativeBounds];
-        if (rect.size.height > 1480) {//6+  scale 应该是3
-            scale = 3;
-        }
-        else {
-            scale = [[UIScreen mainScreen] scale];
-        }
-    }
-    else {
-        scale = [[UIScreen mainScreen] scale];
-    }
-    
-    
-    UIGraphicsBeginImageContextWithOptions(frame.size, NO, scale);
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSaveGState(context);
-    
-    
-    CGContextSetFillColorWithColor(context, color.CGColor);
-    CGContextFillRect(context, CGRectMake(.0, .0, size.width, size.height));
-    //CGContextFillEllipseInRect(context, frame);
-    
-    
-    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-    
-    CGContextRestoreGState(context);
-    UIGraphicsEndImageContext();
-    return newImage;
-}
-
-+(UIImage *)fdd_paopaoWithColor:(UIColor *)color size:(CGSize)size {
++(UIImage *)paopaoWithColor:(UIColor *)color size:(CGSize)size {
     
     
     CGRect frame = CGRectMake(0.0f, 0.0f, size.width, size.height);
@@ -375,6 +228,15 @@
 }
 
 
+
++(UIImage*)maskImage:(UIImage*)originImage toPath:(UIBezierPath*)path{
+    UIGraphicsBeginImageContextWithOptions(originImage.size, NO, 0);
+    [path addClip];
+    [originImage drawAtPoint:CGPointZero];
+    UIImage* img = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return img;
+}
 
 
 

@@ -1,28 +1,90 @@
 //
-//  UIImage+Tint.h
+//  UIImage+Tint.m
 //
-//  Created by Matt Gemmell on 04/07/2010.
-//  Copyright 2010 Instinctive Code.
+//  Created by yohunl
+
 //
 
 #import <UIKit/UIKit.h>
 
-@interface UIImage (MGTint)
-
+@interface UIImage (FDDTint)
+/**
+ *  采用color blend改变图片颜色
+ *
+ *  @param color tint颜色
+ *
+ *  @return 混合后的图片
+ */
 - (UIImage *)imageTintedWithColor:(UIColor *)color;
+
+/**
+ *  图片的 opaque(不透明的) mask遮罩
+ *
+ *  @param color    遮罩的颜色
+ *  @param fraction 遮罩的透明度
+ *
+ *  @return 返回遮罩后的图
+ */
 - (UIImage *)imageTintedWithColor:(UIColor *)color fraction:(CGFloat)fraction;
+/**
+ *  以指定的混合模式,使用指定的颜色来混合图形和某种颜色
+ *
+ *  @param blendMode 混合的模式
+ *  @param tintColor 目标色
+ *
+ *  @return 混合后的图片
+ */
+- (UIImage *)imageWithBlendMode:(CGBlendMode)blendMode tintColor:(UIColor *)tintColor;
+
+/**
+ *  创建 颜色值为color的size大小的图片
+ *
+ *  @param color 要创建的图片的颜色
+ *  @param size  图片的大小
+ *
+ *  @return 创建的图片
+ */
 + (UIImage *)imageWithColor:(UIColor *)color size:(CGSize)size;
-+ (UIImage *)imageOfSize:(CGSize)size color:(UIColor *)color;
+/**
+ *  创建 颜色值为color的size为(1,1)大小的图片
+ *
+ *  @param color 要创建的图片的颜色
+ *
+ *  @return 创建的图片
+ */
 + (UIImage *)imageWithColor:(UIColor *)color;
+
+/**
+ *  使用颜色color创建一个直径为diameter的图片.默认的缩放因子scale和mainScreen一样的
+ *
+ *  @param color    颜色值
+ *  @param diameter 直径
+ *
+ *  @return 创建的图片
+ */
 + (UIImage *)circularImageWithColor:(UIColor *)color withDiamter:(NSUInteger)diameter;
+
+/**
+ *  使用颜色color创建一个直径为diameter的图片.缩放因子scale
+ *
+ *  @param color    颜色值
+ *  @param diameter 直径
+ *  @param scale    缩放因子
+ *
+ *  @return 创建的图片
+ */
 + (UIImage *)circularImageWithColor:(UIColor *)color withDiamter:(NSUInteger)diameter  scale:(CGFloat)scale;
-+ (UIImage *)circularImageWithColor:(UIColor *)color waiColor:(UIColor *)waiColor withDiamter:(NSUInteger)diameter;
-- (UIImage *)pbResizedImageWithWidth:(CGFloat)newWidth andTiledAreaFrom:(CGFloat)from1 to:(CGFloat)to1 andFrom:(CGFloat)from2 to:(CGFloat)to2;
-+ (UIImage *)fdd_imageWithColor:(UIColor *)color size:(CGSize)size;
-+(UIImage *)fdd_paopaoWithColor:(UIColor *)color size:(CGSize)size;
+
+/**
+ *  使用颜色color创建一个中间带箭头的泡泡
+ *
+ *  @param color 泡泡的颜色
+ *  @param size  大小
+ *
+ *  @return 创建的图片
+ */
++(UIImage *)paopaoWithColor:(UIColor *)color size:(CGSize)size;
 
 
-+(void)drawLinearGradient:(CGContextRef)context colorBottom:(UIColor *)colorBottom topColor:(UIColor *)topColor frame:(CGRect)frame;
-+ (UIImage *)circularDoubleCircleWithDiamter:(NSUInteger)diameter ;
-+ (UIImage *)circularWithDiamter:(NSUInteger)diameter colorBottom:(UIColor *)colorBottom topColor:(UIColor *)topColor;
+
 @end

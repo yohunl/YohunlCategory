@@ -16,5 +16,7 @@
 #import "UIImage+Resizing.h"
 #import "UIImage+Rotating.h"
 #import "UIImage+Saving.h"
-#import "NYXProgressiveImageView.h"
 #import "UIImage+Tint.h"
+#import "UIImage+Alpha.h"
+#import "UIImage+RoundedCorner.h"
+#import "UIImage+FDDExtension.h"

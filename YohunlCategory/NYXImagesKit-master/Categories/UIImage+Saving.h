@@ -35,6 +35,11 @@ typedef enum
 
 -(BOOL)saveToPath:(NSString*)path;
 
+/**
+ *  保存图片到相册
+ *
+ *  @return YES 保存成功 NO 失败
+ */
 -(BOOL)saveToPhotosAlbum;
 
 +(NSString*)extensionForUTI:(CFStringRef)uti;

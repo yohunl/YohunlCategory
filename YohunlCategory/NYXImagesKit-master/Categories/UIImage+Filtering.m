@@ -323,7 +323,7 @@ static float __f_unsharpen_kernel_3x3[9] = {
 		void* outt = malloc(n);
 		vImage_Buffer src = {data, height, width, bytesPerRow};
 		vImage_Buffer dest = {outt, height, width, bytesPerRow};
-		vImageConvolveWithBias_ARGB8888(&src, &dest, NULL, 0, 0, __s_emboss_kernel_3x3, 3, 3, 1/*divisor*/, bias, NULL, kvImageCopyInPlace);
+		vImageConvolveWithBias_ARGB8888(&src, &dest, NULL, 0, 0, __s_emboss_kernel_3x3, 3, 3, 1/*divisor*/, (int32_t)bias, NULL, kvImageCopyInPlace);
 
 		memcpy(data, outt, n);
 
@@ -331,6 +331,9 @@ static float __f_unsharpen_kernel_3x3[9] = {
 	}
 	else
 	{
+        //去除提示这段代码不可能被执行的警告
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunreachable-code"
 		const size_t pixelsCount = width * height;
 		const size_t n = sizeof(float) * pixelsCount;
 		float* dataAsFloat = malloc(n);
@@ -357,6 +360,7 @@ static float __f_unsharpen_kernel_3x3[9] = {
 
 		free(dataAsFloat);
 		free(resultAsFloat);
+#pragma clang diagnostic pop//[-Wunreachable-code]
 	}
 
 	CGImageRef embossImageRef = CGBitmapContextCreateImage(bmContext);
@@ -436,6 +440,9 @@ static float __f_unsharpen_kernel_3x3[9] = {
 	}
 	else
 	{
+        //去除提示这段代码不可能被执行的警告
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunreachable-code"
 		const size_t bitmapByteCount = bytesPerRow * height;
 		for (size_t i = 0; i < bitmapByteCount; i += kNyxNumberOfComponentsPerARBGPixel)
 		{
@@ -447,6 +454,8 @@ static float __f_unsharpen_kernel_3x3[9] = {
 			data[i + 2] = NYX_SAFE_PIXEL_COMPONENT_VALUE(255 * powf((green / 255.0f), value));
 			data[i + 3] = NYX_SAFE_PIXEL_COMPONENT_VALUE(255 * powf((blue / 255.0f), value));
 		}
+
+#pragma clang diagnostic pop//[-Wunreachable-code]
 	}
 
 	/// Create an image object from the context
@@ -701,6 +710,10 @@ static float __f_unsharpen_kernel_3x3[9] = {
 	}
 	else
 	{
+        //去除提示这段代码不可能被执行的警告
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunreachable-code"
+
 		const size_t pixelsCount = width * height;
 		const size_t n = sizeof(float) * pixelsCount;
 		float* dataAsFloat = malloc(n);
@@ -727,6 +740,8 @@ static float __f_unsharpen_kernel_3x3[9] = {
 
 		free(dataAsFloat);
 		free(resultAsFloat);
+        
+#pragma clang diagnostic pop//[-Wunreachable-code]
 	}
 
 	CGImageRef sharpenedImageRef = CGBitmapContextCreateImage(bmContext);
@@ -767,7 +782,7 @@ static float __f_unsharpen_kernel_3x3[9] = {
 		void* outt = malloc(n);
 		vImage_Buffer src = {data, height, width, bytesPerRow};
 		vImage_Buffer dest = {outt, height, width, bytesPerRow};
-		vImageConvolveWithBias_ARGB8888(&src, &dest, NULL, 0, 0, __s_unsharpen_kernel_3x3, 3, 3, 9/*divisor*/, bias, NULL, kvImageCopyInPlace);
+		vImageConvolveWithBias_ARGB8888(&src, &dest, NULL, 0, 0, __s_unsharpen_kernel_3x3, 3, 3, 9/*divisor*/, (int32_t)bias, NULL, kvImageCopyInPlace);
 
 		memcpy(data, outt, n);
 
@@ -775,6 +790,10 @@ static float __f_unsharpen_kernel_3x3[9] = {
 	}
 	else
 	{
+        //去除提示这段代码不可能被执行的警告
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunreachable-code"
+
 		const size_t pixelsCount = width * height;
 		const size_t n = sizeof(float) * pixelsCount;
 		float* dataAsFloat = malloc(n);
@@ -801,6 +820,7 @@ static float __f_unsharpen_kernel_3x3[9] = {
 
 		free(dataAsFloat);
 		free(resultAsFloat);
+#pragma clang diagnostic pop//[-Wunreachable-code]
 	}
 
 	CGImageRef unsharpenedImageRef = CGBitmapContextCreateImage(bmContext);
