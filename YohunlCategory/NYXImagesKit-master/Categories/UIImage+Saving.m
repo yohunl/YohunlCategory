@@ -3,8 +3,8 @@
 //  NYXImagesKit
 //
 //  Created by @Nyx0uf on 05/05/11.
-//  Copyright 2012 Nyx0uf. All rights reserved.
-//  www.cocoaintheshell.com
+//  Copyright 2012 Benjamin Godard. All rights reserved.
+//  www.cococabyss.com
 //
 
 
@@ -12,9 +12,9 @@
 #import <ImageIO/ImageIO.h> // For CGImageDestination
 #import <MobileCoreServices/MobileCoreServices.h> // For the UTI types constants
 #import <AssetsLibrary/AssetsLibrary.h> // For photos album saving
-#import <UIKit/UIImage.h>
 
-@interface UIImage (NYX_Saving_private)
+
+@interface UIImage(NYX_Saving_private)
 -(CFStringRef)utiForType:(NYXImageType)type;
 @end
 

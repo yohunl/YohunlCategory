@@ -63,6 +63,8 @@
     
     [view setNeedsDisplay];
     
+    UIImage *img = [UIImage new];
+    
    
     
 }

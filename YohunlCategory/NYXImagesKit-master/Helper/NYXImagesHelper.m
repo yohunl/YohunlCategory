@@ -4,8 +4,8 @@
 //
 //  Created by Matthias Tretter on 02/06/11.
 //  Originally Created by @Nyx0uf on 02/05/11.
-//  Copyright 2012 Nyx0uf. All rights reserved.
-//  www.cocoaintheshell.com
+//  Copyright 2012 Benjamin Godard. All rights reserved.
+//  www.cococabyss.com
 //
 
 
@@ -16,13 +16,12 @@ static CIContext* __ciContext = nil;
 static CGColorSpaceRef __rgbColorSpace = NULL;
 
 
-CGContextRef NYXCreateARGBBitmapContext(const size_t width, const size_t height, const size_t bytesPerRow, BOOL withAlpha)
+CGContextRef NYXCreateARGBBitmapContext(const size_t width, const size_t height, const size_t bytesPerRow)
 {
 	/// Use the generic RGB color space
 	/// We avoid the NULL check because CGColorSpaceRelease() NULL check the value anyway, and worst case scenario = fail to create context
 	/// Create the bitmap context, we want pre-multiplied ARGB, 8-bits per component
-	CGImageAlphaInfo alphaInfo = (withAlpha ? kCGImageAlphaPremultipliedFirst : kCGImageAlphaNoneSkipFirst);
-	CGContextRef bmContext = CGBitmapContextCreate(NULL, width, height, 8/*Bits per component*/, bytesPerRow, NYXGetRGBColorSpace(), kCGBitmapByteOrderDefault | alphaInfo);
+	CGContextRef bmContext = CGBitmapContextCreate(NULL, width, height, 8/*Bits per component*/, bytesPerRow, NYXGetRGBColorSpace(), kCGBitmapByteOrderDefault | kCGImageAlphaPremultipliedFirst);
 
 	return bmContext;
 }
@@ -36,7 +35,7 @@ CGImageRef NYXCreateGradientImage(const size_t pixelsWide, const size_t pixelsHi
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceGray();
 
 	// create the bitmap context
-	CGContextRef gradientBitmapContext = CGBitmapContextCreate(NULL, pixelsWide, pixelsHigh, 8, 0, colorSpace, (CGBitmapInfo)kCGImageAlphaNone);
+	CGContextRef gradientBitmapContext = CGBitmapContextCreate(NULL, pixelsWide, pixelsHigh, 8, 0, colorSpace, kCGImageAlphaNone);
 
 	// define the start and end grayscale values (with the alpha, even though
 	// our bitmap context doesn't support alpha the gradient requires it)
@@ -88,12 +87,4 @@ void NYXImagesKitRelease(void)
 		CGColorSpaceRelease(__rgbColorSpace), __rgbColorSpace = NULL;
 	if (__ciContext)
 		__ciContext = nil;
-}
-
-BOOL NYXImageHasAlpha(CGImageRef imageRef)
-{
-	CGImageAlphaInfo alpha = CGImageGetAlphaInfo(imageRef);
-	BOOL hasAlpha = (alpha == kCGImageAlphaFirst || alpha == kCGImageAlphaLast || alpha == kCGImageAlphaPremultipliedFirst || alpha == kCGImageAlphaPremultipliedLast);
-
-	return hasAlpha;
 }
