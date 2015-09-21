@@ -21,8 +21,18 @@
 
 -(UIImage*)rotateImagePixelsInDegrees:(float)degrees;
 
+/**
+ *  旋转图片180度
+ *
+ *  @return 旋转后的图片
+ */
 -(UIImage*)verticalFlip;
 
+/**
+ *  旋转图片90度
+ *
+ *  @return 旋转后的图片
+ */
 -(UIImage*)horizontalFlip;
 
 @end

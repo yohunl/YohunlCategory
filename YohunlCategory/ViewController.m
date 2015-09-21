@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-
+#import "NYXImagesKit.h"
 @interface ViewController ()
 
 @end
@@ -63,7 +63,18 @@
     
     [view setNeedsDisplay];
     
-    UIImage *img = [UIImage new];
+    UIImage *img = [UIImage imageNamed:@"hongyanYY"];
+    //img = [img scaleToFitSize:CGSizeMake(70, 70)];
+    //img = [img reflectedImageWithHeight:200 fromAlpha:2 toAlpha:100];
+    
+    UIImage *img33 = [UIImage imageWithColor:[UIColor greenColor] size:img.size];
+    img = [img maskWithImage:img33];
+    
+    UIImageView *imgview = [[UIImageView alloc]initWithImage:img];
+    imgview.center = CGPointMake(150, 150);
+    [self.view addSubview:imgview];
+    
+    
     //测试
     
    

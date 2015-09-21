@@ -10,8 +10,18 @@
 #import <UIKit/UIKit.h>
 @interface UIImage (NYX_Enhancing)
 
+/**
+ *  调用CIImage的滤镜自动优化图片
+ *
+ *  @return 优化后的图片
+ */
 -(UIImage*)autoEnhance;
 
+/**
+ *  调用CIImage的红眼滤镜来优化图片
+ *
+ *  @return 优化后的图片
+ */
 -(UIImage*)redEyeCorrection;
 
 @end

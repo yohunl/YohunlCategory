@@ -11,7 +11,12 @@
 #import "UIImage+Enhancing.h"
 #import <CoreImage/CoreImage.h>
 
-
+/*
+ CIRedEyeCorrection：修复因相机的闪光灯导致的各种红眼
+ CIFaceBalance：调整肤色
+ CIVibrance：在不影响肤色的情况下，改善图像的饱和度
+ CIToneCurve：改善图像的对比度
+ CIHighlightShadowAdjust：改善阴影细节*/
 @implementation UIImage (NYX_Enhancing)
 
 -(UIImage*)autoEnhance
@@ -22,6 +27,7 @@
 
 	CIImage* ciImage = [[CIImage alloc] initWithCGImage:self.CGImage];
 
+    //取得除了红眼滤镜外的所有的对当前图片可用的滤镜
 	NSArray* adjustments = [ciImage autoAdjustmentFiltersWithOptions:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:NO] forKey:kCIImageAutoAdjustRedEye]];
 
 	for (CIFilter* filter in adjustments)

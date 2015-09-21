@@ -12,7 +12,13 @@
 
 
 @interface UIImage (NYX_Blurring)
-
+/**
+ *  高斯模糊一张图片
+ *
+ *  @param bias 高斯模糊的数值
+ *
+ *  @return 模糊后的图片
+ */
 -(UIImage*)gaussianBlurWithBias:(NSInteger)bias;
 
 @end
