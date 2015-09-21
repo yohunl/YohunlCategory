@@ -64,6 +64,7 @@
     [view setNeedsDisplay];
     
     UIImage *img = [UIImage new];
+    //测试
     
    
     
