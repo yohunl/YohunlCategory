@@ -9,7 +9,7 @@
 
 
 #import "UIImage+Blurring.h"
-#import "UIImage+Enhancing.h" 
+#import "UIImage+Enhancing.h"
 #import "UIImage+Filtering.h"
 #import "UIImage+Masking.h"
 
