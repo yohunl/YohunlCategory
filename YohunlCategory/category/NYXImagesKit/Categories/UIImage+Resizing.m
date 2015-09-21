@@ -3,13 +3,13 @@
 //  NYXImagesKit
 //
 //  Created by @Nyx0uf on 02/05/11.
-//  Copyright 2012 Benjamin Godard. All rights reserved.
-//  www.cococabyss.com
+//  Copyright 2012 Nyx0uf. All rights reserved.
+//  www.cocoaintheshell.com
 //
 
 
 #import "UIImage+Resizing.h"
-
+#import <UIKit/UIImage.h>
 
 @implementation UIImage (NYX_Resizing)
 
@@ -35,7 +35,7 @@
 			y = size.height - newSize.height;
 			break;
 		case NYXCropModeBottomCenter:
-			x = newSize.width * 0.5f;
+			x = (size.width - newSize.width) * 0.5f;
 			y = size.height - newSize.height;
 			break;
 		case NYXCropModeBottomRight:
@@ -59,9 +59,18 @@
 			break;
 	}
 
+	if (self.imageOrientation == UIImageOrientationLeft || self.imageOrientation == UIImageOrientationLeftMirrored || self.imageOrientation == UIImageOrientationRight || self.imageOrientation == UIImageOrientationRightMirrored)
+	{
+		CGFloat temp = x;
+		x = y;
+		y = temp;
+	}
+
+	CGRect cropRect = CGRectMake(x * self.scale, y * self.scale, newSize.width * self.scale, newSize.height * self.scale);
+
 	/// Create the cropped image
-	CGImageRef croppedImageRef = CGImageCreateWithImageInRect(self.CGImage, (CGRect){.origin.x = x, .origin.y = y, .size = newSize});
-	UIImage* cropped = [UIImage imageWithCGImage:croppedImageRef];
+	CGImageRef croppedImageRef = CGImageCreateWithImageInRect(self.CGImage, cropRect);
+	UIImage* cropped = [UIImage imageWithCGImage:croppedImageRef scale:self.scale orientation:self.imageOrientation];
 
 	/// Cleanup
 	CGImageRelease(croppedImageRef);
@@ -77,32 +86,47 @@
 
 -(UIImage*)scaleByFactor:(float)scaleFactor
 {
-	const size_t originalWidth = self.size.width * scaleFactor;
-	const size_t originalHeight = self.size.height * scaleFactor;
-	/// Number of bytes per row, each pixel in the bitmap will be represented by 4 bytes (ARGB), 8 bits of alpha/red/green/blue
-	const size_t bytesPerRow = originalWidth * kNyxNumberOfComponentsPerARBGPixel;
+	CGSize scaledSize = CGSizeMake(self.size.width * scaleFactor, self.size.height * scaleFactor);
+	return [self scaleToFillSize:scaledSize];
+}
 
-	/// Create an ARGB bitmap context
-	CGContextRef bmContext = NYXCreateARGBBitmapContext(originalWidth, originalHeight, bytesPerRow);
-	if (!bmContext) 
+-(UIImage*)scaleToSize:(CGSize)newSize usingMode:(NYXResizeMode)resizeMode
+{
+	switch (resizeMode)
+	{
+		case NYXResizeModeAspectFit:
+			return [self scaleToFitSize:newSize];
+		case NYXResizeModeAspectFill:
+			return [self scaleToCoverSize:newSize];
+		default:
+			return [self scaleToFillSize:newSize];
+	}
+}
+
+/* Convenience method to scale the image using the NYXResizeModeScaleToFill mode */
+-(UIImage*)scaleToSize:(CGSize)newSize
+{
+	return [self scaleToFillSize:newSize];
+}
+
+-(UIImage*)scaleToFillSize:(CGSize)newSize
+{
+	size_t destWidth = (size_t)(newSize.width * self.scale);
+	size_t destHeight = (size_t)(newSize.height * self.scale);
+	if (self.imageOrientation == UIImageOrientationLeft
+		|| self.imageOrientation == UIImageOrientationLeftMirrored
+		|| self.imageOrientation == UIImageOrientationRight
+		|| self.imageOrientation == UIImageOrientationRightMirrored)
+	{
+		size_t temp = destWidth;
+		destWidth = destHeight;
+		destHeight = temp;
+	}
+
+  /// Create an ARGB bitmap context
+	CGContextRef bmContext = NYXCreateARGBBitmapContext(destWidth, destHeight, destWidth * kNyxNumberOfComponentsPerARBGPixel, NYXImageHasAlpha(self.CGImage));
+	if (!bmContext)
 		return nil;
-	
-	/// Handle orientation
-	if (UIImageOrientationLeft == self.imageOrientation)
-	{
-		CGContextRotateCTM(bmContext, M_PI_2);
-		CGContextTranslateCTM(bmContext, 0, -originalHeight);
-	}
-	else if (UIImageOrientationRight == self.imageOrientation)
-	{
-		CGContextRotateCTM(bmContext, -M_PI_2);
-		CGContextTranslateCTM(bmContext, -originalWidth, 0);
-	}
-	else if (UIImageOrientationDown == self.imageOrientation)
-	{
-		CGContextTranslateCTM(bmContext, originalWidth, originalHeight);
-		CGContextRotateCTM(bmContext, -M_PI);
-	}
 
 	/// Image quality
 	CGContextSetShouldAntialias(bmContext, true);
@@ -110,11 +134,14 @@
 	CGContextSetInterpolationQuality(bmContext, kCGInterpolationHigh);
 
 	/// Draw the image in the bitmap context
-	CGContextDrawImage(bmContext, (CGRect){.origin.x = 0.0f, .origin.y = 0.0f, .size.width = originalWidth, .size.height = originalHeight}, self.CGImage);
+
+	UIGraphicsPushContext(bmContext);
+  CGContextDrawImage(bmContext, CGRectMake(0.0f, 0.0f, destWidth, destHeight), self.CGImage);
+	UIGraphicsPopContext();
 
 	/// Create an image object from the context
 	CGImageRef scaledImageRef = CGBitmapContextCreateImage(bmContext);
-	UIImage* scaled = [UIImage imageWithCGImage:scaledImageRef];
+	UIImage* scaled = [UIImage imageWithCGImage:scaledImageRef scale:self.scale orientation:self.imageOrientation];
 
 	/// Cleanup
 	CGImageRelease(scaledImageRef);
@@ -125,71 +152,48 @@
 
 -(UIImage*)scaleToFitSize:(CGSize)newSize
 {
-	const size_t originalWidth = self.size.width;
-	const size_t originalHeight = self.size.height;
-
 	/// Keep aspect ratio
 	size_t destWidth, destHeight;
-	if (originalWidth > originalHeight)
+	if (self.size.width > self.size.height)
 	{
-		destWidth = newSize.width;
-		destHeight = originalHeight * newSize.width / originalWidth;
+		destWidth = (size_t)newSize.width;
+		destHeight = (size_t)(self.size.height * newSize.width / self.size.width);
 	}
 	else
 	{
-		destHeight = newSize.height;
-		destWidth = originalWidth * newSize.height / originalHeight;
+		destHeight = (size_t)newSize.height;
+		destWidth = (size_t)(self.size.width * newSize.height / self.size.height);
 	}
 	if (destWidth > newSize.width)
-	{ 
-		destWidth = newSize.width; 
-		destHeight = originalHeight * newSize.width / originalWidth; 
-	} 
+	{
+		destWidth = (size_t)newSize.width;
+		destHeight = (size_t)(self.size.height * newSize.width / self.size.width);
+	}
 	if (destHeight > newSize.height)
-	{ 
-		destHeight = newSize.height; 
-		destWidth = originalWidth * newSize.height / originalHeight; 
-	}
-
-	/// Create an ARGB bitmap context
-	CGContextRef bmContext = NYXCreateARGBBitmapContext(destWidth, destHeight, destWidth * kNyxNumberOfComponentsPerARBGPixel);
-	if (!bmContext)
-		return nil;
-
-	/// Handle orientation
-	if (UIImageOrientationLeft == self.imageOrientation)
 	{
-		CGContextRotateCTM(bmContext, M_PI_2);
-		CGContextTranslateCTM(bmContext, 0, -destHeight);
+		destHeight = (size_t)newSize.height;
+		destWidth = (size_t)(self.size.width * newSize.height / self.size.height);
 	}
-	else if (UIImageOrientationRight == self.imageOrientation)
+	return [self scaleToFillSize:CGSizeMake(destWidth, destHeight)];
+}
+
+-(UIImage*)scaleToCoverSize:(CGSize)newSize
+{
+	size_t destWidth, destHeight;
+	CGFloat widthRatio = newSize.width / self.size.width;
+	CGFloat heightRatio = newSize.height / self.size.height;
+	/// Keep aspect ratio
+	if (heightRatio > widthRatio)
 	{
-		CGContextRotateCTM(bmContext, -M_PI_2);
-		CGContextTranslateCTM(bmContext, -destWidth, 0);
+		destHeight = (size_t)newSize.height;
+		destWidth = (size_t)(self.size.width * newSize.height / self.size.height);
 	}
-	else if (UIImageOrientationDown == self.imageOrientation)
+	else
 	{
-		CGContextTranslateCTM(bmContext, destWidth, destHeight);
-		CGContextRotateCTM(bmContext, -M_PI);
+		destWidth = (size_t)newSize.width;
+		destHeight = (size_t)(self.size.height * newSize.width / self.size.width);
 	}
-
-	/// Image quality
-	CGContextSetShouldAntialias(bmContext, true);
-	CGContextSetAllowsAntialiasing(bmContext, true);
-	CGContextSetInterpolationQuality(bmContext, kCGInterpolationHigh);
-
-	/// Draw the image in the bitmap context
-	CGContextDrawImage(bmContext, (CGRect){.origin.x = 0.0f, .origin.y = 0.0f, .size.width = destWidth, .size.height = destHeight}, self.CGImage);
-
-	/// Create an image object from the context
-	CGImageRef scaledImageRef = CGBitmapContextCreateImage(bmContext);
-	UIImage* scaled = [UIImage imageWithCGImage:scaledImageRef];
-
-	/// Cleanup
-	CGImageRelease(scaledImageRef);
-	CGContextRelease(bmContext);
-
-	return scaled;	
+	return [self scaleToFillSize:CGSizeMake(destWidth, destHeight)];
 }
 
 @end

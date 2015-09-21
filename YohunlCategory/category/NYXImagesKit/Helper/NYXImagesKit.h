@@ -3,10 +3,11 @@
 //  NYXImagesKit
 //
 //  Created by @Nyx0uf on 02/05/11.
-//  Copyright 2012 Benjamin Godard. All rights reserved.
-//  www.cococabyss.com
+//  Copyright 2012 Nyx0uf. All rights reserved.
+//  www.cocoaintheshell.com
 //
 
+#import <UIKit/UIKit.h>
 
 #import "UIImage+Blurring.h"
 #import "UIImage+Enhancing.h"
@@ -16,4 +17,6 @@
 #import "UIImage+Resizing.h"
 #import "UIImage+Rotating.h"
 #import "UIImage+Saving.h"
+#import "UIView+Screenshot.h"
+#import "UIScrollView+Screenshot.h"
 #import "NYXProgressiveImageView.h"

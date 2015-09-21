@@ -3,14 +3,14 @@
 //  NYXImagesKit
 //
 //  Created by @Nyx0uf on 05/05/11.
-//  Copyright 2012 Benjamin Godard. All rights reserved.
-//  www.cococabyss.com
+//  Copyright 2012 Nyx0uf. All rights reserved.
+//  www.cocoaintheshell.com
 //
 
 
 #import "NYXImagesHelper.h"
 
-
+#import <UIKit/UIImage.h>
 typedef enum
 {
 	NYXImageTypePNG,
