@@ -63,7 +63,6 @@
 
 
 
-
 - (UIImage *)imageWithBlendMode:(CGBlendMode)blendMode tintColor:(UIColor *)tintColor {
     UIImage *img;
     UIGraphicsBeginImageContextWithOptions(self.size, NO, 0); //开始图片上下文绘制
@@ -103,7 +102,10 @@
     return [self imageWithColor:color size:CGSizeMake(1.0, 1.0)];
 }
 
-
++ (UIImage *)imageStretchWithColor:(UIColor *)color {
+    UIImage *img = [self imageWithColor:color size:CGSizeMake(10.0, 10.0)];
+    return [img resizableImageWithCapInsets:UIEdgeInsetsMake(2, 2, 2, 2) resizingMode:UIImageResizingModeStretch];
+}
 
 + (UIImage *)circularImageWithColor:(UIColor *)color withDiamter:(NSUInteger)diameter
 {

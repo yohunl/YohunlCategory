@@ -55,6 +55,15 @@
 + (UIImage *)imageWithColor:(UIColor *)color;
 
 /**
+ *   创建 颜色值为color的size为(10,10)大小的可拉伸的图片
+ *
+ *  @param color 要创建的图片的颜色
+ *
+ *  @return 创建的图片
+ */
++ (UIImage *)imageStretchWithColor:(UIColor *)color;
+
+/**
  *  使用颜色color创建一个直径为diameter的图片.默认的缩放因子scale和mainScreen一样的
  *
  *  @param color    颜色值

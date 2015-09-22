@@ -30,6 +30,8 @@
 		095EB12C1BAFEF5E0020EF74 /* hongyan@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 095EB12B1BAFEF5E0020EF74 /* hongyan@2x.jpg */; settings = {ASSET_TAGS = (); }; };
 		095EB12E1BAFF03E0020EF74 /* hongyanYY@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 095EB12D1BAFF03E0020EF74 /* hongyanYY@2x.png */; settings = {ASSET_TAGS = (); }; };
 		095EB1391BB00CEF0020EF74 /* UIImage+Tint.m in Sources */ = {isa = PBXBuildFile; fileRef = 095EB1381BB00CEF0020EF74 /* UIImage+Tint.m */; settings = {ASSET_TAGS = (); }; };
+		095EB13D1BB0F3A70020EF74 /* UIColor+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 095EB13C1BB0F3A70020EF74 /* UIColor+Utils.m */; settings = {ASSET_TAGS = (); }; };
+		095EB1981BB150320020EF74 /* IMG_2280.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 095EB1971BB150320020EF74 /* IMG_2280.JPG */; settings = {ASSET_TAGS = (); }; };
 		097221191A1DD5D900C0A125 /* NSString+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 097221181A1DD5D900C0A125 /* NSString+Extension.m */; };
 		0995F8871A1C82B700980A6C /* gujia_press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0995F8861A1C82B700980A6C /* gujia_press@2x.png */; };
 		09D4EB421A19F75200E4C3C5 /* UIView+Helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 09D4EB411A19F75200E4C3C5 /* UIView+Helpers.m */; };
@@ -549,6 +551,9 @@
 		095EB12D1BAFF03E0020EF74 /* hongyanYY@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hongyanYY@2x.png"; sourceTree = "<group>"; };
 		095EB1371BB00CEF0020EF74 /* UIImage+Tint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Tint.h"; sourceTree = "<group>"; };
 		095EB1381BB00CEF0020EF74 /* UIImage+Tint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Tint.m"; sourceTree = "<group>"; };
+		095EB13B1BB0F3A70020EF74 /* UIColor+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Utils.h"; sourceTree = "<group>"; };
+		095EB13C1BB0F3A70020EF74 /* UIColor+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Utils.m"; sourceTree = "<group>"; };
+		095EB1971BB150320020EF74 /* IMG_2280.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = IMG_2280.JPG; sourceTree = "<group>"; };
 		097221171A1DD5D900C0A125 /* NSString+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Extension.h"; sourceTree = "<group>"; };
 		097221181A1DD5D900C0A125 /* NSString+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Extension.m"; sourceTree = "<group>"; };
 		0995F8861A1C82B700980A6C /* gujia_press@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gujia_press@2x.png"; sourceTree = "<group>"; };
@@ -1065,6 +1070,7 @@
 		0949BB601A15E9E700DF7342 /* YohunlCategory */ = {
 			isa = PBXGroup;
 			children = (
+				095EB13A1BB0F0E90020EF74 /* UIColor */,
 				095EB1071BAFE3B60020EF74 /* NYXImagesKit-master */,
 				09F37B381BAFB84C005E1F4F /* IMG */,
 				0995F8861A1C82B700980A6C /* gujia_press@2x.png */,
@@ -1200,6 +1206,15 @@
 			path = Helper;
 			sourceTree = "<group>";
 		};
+		095EB13A1BB0F0E90020EF74 /* UIColor */ = {
+			isa = PBXGroup;
+			children = (
+				095EB13B1BB0F3A70020EF74 /* UIColor+Utils.h */,
+				095EB13C1BB0F3A70020EF74 /* UIColor+Utils.m */,
+			);
+			path = UIColor;
+			sourceTree = "<group>";
+		};
 		09D4EB401A19F74100E4C3C5 /* UIView */ = {
 			isa = PBXGroup;
 			children = (
@@ -1214,6 +1229,7 @@
 		09F37B381BAFB84C005E1F4F /* IMG */ = {
 			isa = PBXGroup;
 			children = (
+				095EB1971BB150320020EF74 /* IMG_2280.JPG */,
 				095EB12D1BAFF03E0020EF74 /* hongyanYY@2x.png */,
 				095EB12B1BAFEF5E0020EF74 /* hongyan@2x.jpg */,
 				09F37B391BAFB84C005E1F4F /* 400dianhua.png */,
@@ -1851,6 +1867,7 @@
 				09F37D5E1BAFB84D005E1F4F /* icon_chose_arrow_nor@2x.png in Resources */,
 				09F37D321BAFB84D005E1F4F /* fyzanwei.png in Resources */,
 				09F37D101BAFB84D005E1F4F /* daohang_gengduo01.png in Resources */,
+				095EB1981BB150320020EF74 /* IMG_2280.JPG in Resources */,
 				09F37EAB1BAFB84D005E1F4F /* xiangqing_soucang02@3x.png in Resources */,
 				09F37D191BAFB84D005E1F4F /* daohang_jinrong02@3x.png in Resources */,
 				09F37E1C1BAFB84D005E1F4F /* publish_pic_normal.png in Resources */,
@@ -2218,6 +2235,7 @@
 				09FB841A1BB0940900D92BAC /* UIImage+Alpha.m in Sources */,
 				095EB1211BAFE3B60020EF74 /* UIImage+Enhancing.m in Sources */,
 				095EB1221BAFE3B60020EF74 /* UIImage+Filtering.m in Sources */,
+				095EB13D1BB0F3A70020EF74 /* UIColor+Utils.m in Sources */,
 				0949BB8A1A15EADB00DF7342 /* UITableViewCell+Extension.m in Sources */,
 				0949BB961A15F31800DF7342 /* NSObject+Extension.m in Sources */,
 				095EB1391BB00CEF0020EF74 /* UIImage+Tint.m in Sources */,

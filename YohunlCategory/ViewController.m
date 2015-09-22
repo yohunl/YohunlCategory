@@ -11,6 +11,13 @@
 #import "UIImage+Alpha.h"
 #import "UIImage+RoundedCorner.h"
 
+#import "UIColor+Utils.h"
+
+
+#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 \
+green:((float)((rgbValue & 0xFF00) >> 8))/255.0 \
+blue:((float)(rgbValue & 0xFF))/255.0 \
+alpha:1.0]
 @interface ViewController ()
 
 @end
@@ -75,13 +82,45 @@
     //img = [img maskWithImage:img33];
     //img = [img transparentBorderImage:5];
     img = [img circularWithDiamter:50];
+    
+    img = [UIImage imageStretchWithColor:UIColorFromRGB(0x4bc40a)];
     UIImageView *imgview = [[UIImageView alloc]initWithImage:img];
+    imgview.frame = CGRectMake(0, 0, 100, 100);
     imgview.center = CGPointMake(150, 150);
-    imgview.backgroundColor = [UIColor blackColor];
+    imgview.backgroundColor = [UIColor clearColor];
     [self.view addSubview:imgview];
     
+    UIImage *img2 = [UIImage imageWithColor:UIColorFromRGB(0x4bc40a)];
+    UIImageView *imgview2 = [[UIImageView alloc]initWithImage:img2];
+    imgview2.frame = CGRectMake(0, 0, 100, 100);
+    imgview2.center = CGPointMake(150, 300);
+    imgview2.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:imgview2];
+    
+    
+    UIColor *color = nil;
+    CGFloat  red2 = color.red;
+    NSInteger aa = color.RGBValue;
+    NSString *stva = color.hexString;
+    
+    [self findNumFromStr];
+    //[self touchUpInsideByThreadOne:nil];
     
     //测试
+    UIImage *imageToCompress = [UIImage imageNamed:@"IMG_2280.JPG"];
+    NSData *imageToCompressData = [[NSData alloc] initWithData:UIImageJPEGRepresentation(imageToCompress, 1)];
+    
+    NSLog(@"original size = %lu",(unsigned long)imageToCompressData.length);
+    
+    
+    
+    //Compressed image almost a 90% reduction
+    UIImage *compressedImage = [imageToCompress scaleByFactor:0.3];
+    NSData *icompressedData = [[NSData alloc] initWithData:UIImageJPEGRepresentation(compressedImage, 1)];
+    NSLog(@"Compressed size: %lu",(unsigned long)icompressedData.length);
+    
+    
+    
     
    
     
@@ -92,6 +131,53 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(int)findNumFromStr
+{
+    NSString *originalString = @"a1b2c3d4e5f6g7h8i9j";
+    
+    // Intermediate
+    NSMutableString *numberString = [[NSMutableString alloc] init];
+    NSString *tempStr;
+    NSScanner *scanner = [NSScanner scannerWithString:originalString];
+    NSCharacterSet *numbers = [NSCharacterSet characterSetWithCharactersInString:@"0123456789"];
+    
+    while (![scanner isAtEnd]) {
+        // Throw away characters before the first number.
+        [scanner scanUpToCharactersFromSet:numbers intoString:nil];
+        
+        // Collect numbers.
+        [scanner scanCharactersFromSet:numbers intoString:&tempStr];
+        [numberString appendString:tempStr];
+        tempStr = @"";
+    }
+    // Result.
+    int number = [numberString integerValue];
+    
+    return number;
+}
+//- (IBAction)touchUpInsideByThreadOne:(id)sender {
+//    NSDate *da = [NSDate date];
+//    NSString *daStr = [da description];
+//    const char *queueName = [daStr UTF8String];
+//    dispatch_queue_t myQueue = dispatch_queue_create(queueName, DISPATCH_QUEUE_CONCURRENT);
+//    
+//    dispatch_async(myQueue, ^{
+//        //[NSThread sleepForTimeInterval:6];
+//        NSLog(@"[NSThread sleepForTimeInterval:6];");
+//    });
+//    
+//    dispatch_async(myQueue, ^{
+//        //[NSThread sleepForTimeInterval:3];
+//        NSLog(@"[NSThread sleepForTimeInterval:2.1];");
+//    });
+//    
+//    dispatch_async(myQueue, ^{
+//        //[NSThread sleepForTimeInterval:1];
+//        NSLog(@"[NSThread sleepForTimeInterval:2];");
+//    });
+//    
+//
+//}
 @end
 
 

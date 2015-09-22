@@ -41,4 +41,14 @@
  */
 -(UIImage*)maskWithImage:(UIImage*)mask;
 
+
+/**
+ *  本身作为遮罩,相当于本身只是提供轮廓,maskColor作为遮罩  最后生成的是  本身轮廓的 颜色为maskColor 的图片.通常用来作为改变图片的颜色,聊天时候的背景泡泡,原图为黑色,然后我们可以生成绿色的和灰色的泡泡,区分是自己发的聊天信息,还是对方的,参见短信,微信等
+ *
+ *  @param maskColor 遮罩的颜色
+ *
+ *  @return 遮罩后的图片
+ */
+- (UIImage *)imageMaskedWithColor:(UIColor *)maskColor;
+
 @end
